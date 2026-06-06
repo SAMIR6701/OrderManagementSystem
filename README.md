@@ -53,50 +53,19 @@ A secure and scalable RESTful Order Management System built using Spring Boot. T
  
 ---
  
-## 📁 Project Structure
+## Project Structure
  
-```plaintext
 src/main/java/com/example/demo
  
-├── config
-│   ├── SecurityConfig.java
-│   └── SwaggerConfig.java
-│
-├── controller
-│   ├── AuthController.java
-│   └── OrderController.java
-│
-├── dto
-│   ├── LoginRequest.java
-│   ├── OrderRequestDTO.java
-│   └── OrderResponseDTO.java
-│
-├── entity
-│   ├── Order.java
-│   ├── OrderStatus.java
-│   └── User.java
-│
-├── exception
-│   ├── GlobalExceptionHandler.java
-│   └── ResourceNotFoundException.java
-│
-├── repository
-│   ├── OrderRepository.java
-│   └── UserRepository.java
-│
-├── security
-│   ├── JwtFilter.java
-│   ├── JwtUtil.java
-│   └── CustomerUserDetailsService.java
-│
-├── service
-│   ├── OrderService.java
-│   └── OrderServiceImpl.java
-│
-└── OrderManagementSystemApplication.java
-```
- 
----
+├── config          # Security & Swagger Configuration
+├── controller      # REST APIs
+├── dto             # Request/Response Objects
+├── entity          # JPA Entities
+├── exception       # Global Exception Handling
+├── repository      # Database Access Layer
+├── security        # JWT Authentication & Authorization
+├── service         # Business Logic
+└── application     # Main Spring Boot Class
  
 ## 🔄 Order Lifecycle
  
