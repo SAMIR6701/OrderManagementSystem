@@ -53,19 +53,23 @@ A secure and scalable RESTful Order Management System built using Spring Boot. T
  
 ---
  
-## Project Structure
+## 📂 Project Modules
  
-src/main/java/com/example/demo
+🔐 Security → JWT Authentication & Authorization
  
-├── config          # Security & Swagger Configuration
-├── controller      # REST APIs
-├── dto             # Request/Response Objects
-├── entity          # JPA Entities
-├── exception       # Global Exception Handling
-├── repository      # Database Access Layer
-├── security        # JWT Authentication & Authorization
-├── service         # Business Logic
-└── application     # Main Spring Boot Class
+🎮 Controller → REST APIs
+ 
+📦 DTO → Request & Response Objects
+ 
+🗄️ Entity → Database Models
+ 
+🔧 Service → Business Logic
+ 
+💾 Repository → Data Access Layer
+ 
+⚙️ Config → Security & Swagger Configuration
+ 
+🚨 Exception → Global Exception Handling
  
 ## 🔄 Order Lifecycle
  
