@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.OrderRequestDTO;
@@ -54,6 +56,30 @@ public class OrderController {
 		OrderResponseDTO order = serv.getOrderbyId(id);
 		return ResponseEntity.ok(order);
 	}
+
+	@GetMapping("/paged")
+	public ResponseEntity<Page<OrderResponseDTO>> getOrderWithPagination(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "5") int size, @RequestParam(defaultValue="id")String sortBy) {
+		return ResponseEntity.ok(serv.getAllOrders(page, size,sortBy));
+	}
+	
+	
+	@GetMapping("/status/{status}")
+	public ResponseEntity<List<OrderResponseDTO>> getOrderByStatus(@PathVariable OrderStatus staus){
+		return ResponseEntity.ok(serv.getOrderByStatus(staus));
+	}
+	
+	@GetMapping("/customer/{customername}")
+	public ResponseEntity<List<OrderResponseDTO>> getOrderByCustomername(@PathVariable String customername){
+		return ResponseEntity.ok(serv.getOrdersByCustomer(customername));
+	}
+	
+	@GetMapping("/product/{productName}")
+	public ResponseEntity<List<OrderResponseDTO>> getOrderByProductName(@PathVariable String productName){
+		return ResponseEntity.ok(serv.getOrdersByProduct(productName));
+	}
+	
+	
 
 	// update order
 	@PutMapping("/{id}")
