@@ -6,6 +6,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.OrderRequestDTO;
@@ -215,6 +218,37 @@ public class Orderservice implements OrderServiceImpl {
 
 		}
 	}
+
+	@Override
+	public Page<OrderResponseDTO> getAllOrders(int page, int size, String Sort) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Order> orders = repo.findAll(pageable);
+		return orders.map(this::mapTOResponseDTO);
+		
+	}
+
+	@Override
+	public List<OrderResponseDTO> getOrderByStatus(OrderStatus status) {
+		List<Order> orders= repo.findByStatus(status);
+		
+		return orders.stream().map(this::mapTOResponseDTO).toList();
+	}
+
+	@Override
+	public List<OrderResponseDTO> getOrdersByCustomer(String customername) {
+	
+		return repo.findByCustomername(customername).stream().map(this:: mapTOResponseDTO).toList();
+	}
+
+	@Override
+	public List<OrderResponseDTO> getOrdersByProduct(String productName) {
+		return repo.findByCustomername(productName).stream().map(this:: mapTOResponseDTO).toList();
+	
+	}
+
+	
+
+	
 
 	
 
