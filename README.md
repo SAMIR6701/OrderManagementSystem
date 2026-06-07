@@ -216,13 +216,12 @@ http://localhost:8004/h2-console
 - Swagger Documentation
 - Spring Security
 - JPA & Hibernate
+- Pagination & Sorting
+- Search & Filtering
  
 ---
  
 ## 🚀 Future Enhancements
- 
-- Pagination & Sorting
-- Search & Filtering
 - Audit Logging
 - Docker Support
 - Email Notifications
