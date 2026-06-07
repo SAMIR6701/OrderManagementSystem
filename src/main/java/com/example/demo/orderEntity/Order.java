@@ -9,50 +9,97 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "orders")
 public class Order {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "order_number", nullable = false, unique = true)
 	private String ordernumber;
-	
+
 	@Column(name = "customer_name", nullable = false)
 	private String customername;
-	
+
 	@Column(name = "product_name", nullable = false)
 	private String productName;
-	
+
 	@Column(nullable = false)
 	private Integer quantity;
-	
+
 	@Column(nullable = false)
 	private Double price;
-	
+
 	@Column(name = "total_amount", nullable = false)
 	private Double total_amount;
-	
+
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
-	
+
 	@Column(name = "created_at")
 	private LocalDateTime createAt;
+//	@Column(name = "update_At")
+//	private LocalDateTime updateAt;
+//	@Column(name = "created_By")
+//	private String createdBy;
+//	@Column(name = "updated_By")
+//	private String updatedBy;
+//
+//	
+//	
+//	
+//	@PrePersist
+//	public void prePerist() {
+//		this.updateAt=LocalDateTime.now();
+//	}
+//	
+//	@PreUpdate
+//	public void preUpdate() {
+//		this.updateAt=LocalDateTime.now();
+//	}
+//	
+//	
+//	
+//	public LocalDateTime getUpdateAt() {
+//		return updateAt;
+//	}
+//
+//	public void setUpdateAt(LocalDateTime updateAt) {
+//		this.updateAt = updateAt;
+//	}
+//
+//	public String getCreatedBy() {
+//		return createdBy;
+//	}
+//
+//	public void setCreatedBy(String createdBy) {
+//		this.createdBy = createdBy;
+//	}
+//
+//	public String getUpdatedBy() {
+//		return updatedBy;
+//	}
+//
+//	public void setUpdatedBy(String updatedBy) {
+//		this.updatedBy = updatedBy;
+//	}
 
 	// Default Constructor
 	public Order() {
 
 	}
 
-	public Order(String ordernumber, String customername, String productName, Integer quantity,
-			Double price, Double total_amount, OrderStatus status, LocalDateTime createAt) {
+	public Order(String ordernumber, String customername, String productName, Integer quantity, Double price,
+			Double total_amount, OrderStatus status, LocalDateTime createAt) {
 		super();
-		
-		this.ordernumber=ordernumber;
+
+		this.ordernumber = ordernumber;
 		this.customername = customername;
 		this.productName = productName;
 		this.quantity = quantity;
@@ -69,8 +116,6 @@ public class Order {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	
 
 	public String getOrdernumber() {
 		return ordernumber;
@@ -142,9 +187,5 @@ public class Order {
 				+ ", productName=" + productName + ", quantity=" + quantity + ", price=" + price + ", total_amount="
 				+ total_amount + ", status=" + status + ", createAt=" + createAt + "]";
 	}
-
-	
-
-	
 
 }
