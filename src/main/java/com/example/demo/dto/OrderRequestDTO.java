@@ -24,8 +24,8 @@ public class OrderRequestDTO {
 	@Positive(message = "price must be greater than 0")
 	private Double price;
 
-//	@NotNull(message = "Status is required ")
-//	private OrderStatus status;
+	@NotNull(message = "Status is required ")
+	private OrderStatus status;
 
 	// created constructor
 	public OrderRequestDTO() {
@@ -72,13 +72,13 @@ public class OrderRequestDTO {
 		this.price = price;
 	}
 
-//	public OrderStatus getStatus() {
-//		return status;
-//	}
-//
-//	public void setStatus(OrderStatus status) {
-//		this.status = status;
-//	}
+	public OrderStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(OrderStatus status) {
+		this.status = status;
+	}
 
 	
 	
