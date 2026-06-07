@@ -2,6 +2,8 @@ package com.example.demo.orderservice;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.example.demo.dto.OrderRequestDTO;
 import com.example.demo.dto.OrderResponseDTO;
 import com.example.demo.orderEntity.OrderStatus;
@@ -31,5 +33,13 @@ public interface OrderServiceImpl {
 	OrderResponseDTO moveToShipping(Long id, OrderStatus status);
 
 	OrderResponseDTO moveToDeliverd(Long id, OrderStatus status);
+
+	Page<OrderResponseDTO> getAllOrders(int page, int size, String Sort);
+
+	List<OrderResponseDTO> getOrderByStatus(OrderStatus status);
+
+	List<OrderResponseDTO> getOrdersByCustomer(String customername);
+
+	List<OrderResponseDTO> getOrdersByProduct(String productName);
 
 }
