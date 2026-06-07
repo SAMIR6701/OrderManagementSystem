@@ -1,20 +1,106 @@
-🚀 Order Management System
-A secure and scalable Order Management System built using Spring Boot that enables efficient order processing through authentication, authorization, workflow management, pagination, sorting, search, filtering, validation, and exception handling.
-This project demonstrates modern backend development practices and follows a clean layered architecture for maintainability and scalability.
-✨ Features
-🔐 Authentication & Authorization
-JWT Authentication
-Spring Security Integration
-Role-Based Access Control (RBAC)
-ADMIN and USER Roles
-BCrypt Password Encryption
-📦 Order Management
-Create Orders
-Retrieve Orders
-Update Orders
-Delete Orders
-Order Status Management
-🔄 Order Workflow
+# Order Management System
+ 
+A secure and scalable RESTful Order Management System built using Spring Boot. This application enables efficient order processing through CRUD operations, JWT-based authentication, role-based access control, validation, exception handling, and API documentation using Swagger.
+ 
+---
+ 
+## 🚀 Features
+ 
+### Authentication & Authorization
+- JWT Authentication
+- Spring Security Integration
+- Role-Based Access Control (RBAC)
+- ADMIN and USER Roles
+ 
+### Order Management
+- Create New Orders
+- Retrieve All Orders
+- Retrieve Order by ID
+- Update Existing Orders
+- Delete Orders
+ 
+### Validation & Exception Handling
+- Request Validation using Jakarta Validation
+- Global Exception Handling
+- Custom Error Responses
+- Resource Not Found Handling
+ 
+### API Documentation
+- Swagger/OpenAPI Integration
+- Interactive API Testing Interface
+ 
+### Database Integration
+- Spring Data JPA
+- Hibernate ORM
+- H2 Database Support
+- MySQL Ready
+ 
+---
+ 
+## 🛠 Tech Stack
+ 
+| Technology | Version |
+|------------|-----------|
+| Java | 21 |
+| Spring Boot | 3.x |
+| Spring Security | 6.x |
+| Spring Data JPA | Latest |
+| Hibernate | Latest |
+| JWT | Latest |
+| Maven | Latest |
+| H2 Database | Latest |
+| Swagger OpenAPI | Latest |
+ 
+---
+ 
+## 📁 Project Structure
+ 
+```plaintext
+src/main/java/com/example/demo
+ 
+├── config
+│   ├── SecurityConfig.java
+│   └── SwaggerConfig.java
+│
+├── controller
+│   ├── AuthController.java
+│   └── OrderController.java
+│
+├── dto
+│   ├── LoginRequest.java
+│   ├── OrderRequestDTO.java
+│   └── OrderResponseDTO.java
+│
+├── entity
+│   ├── Order.java
+│   ├── OrderStatus.java
+│   └── User.java
+│
+├── exception
+│   ├── GlobalExceptionHandler.java
+│   └── ResourceNotFoundException.java
+│
+├── repository
+│   ├── OrderRepository.java
+│   └── UserRepository.java
+│
+├── security
+│   ├── JwtFilter.java
+│   ├── JwtUtil.java
+│   └── CustomerUserDetailsService.java
+│
+├── service
+│   ├── OrderService.java
+│   └── OrderServiceImpl.java
+│
+└── OrderManagementSystemApplication.java
+```
+ 
+---
+ 
+## 🔄 Order Lifecycle
+ 
+```plaintext
 CREATED
    │
    ▼
@@ -32,119 +118,122 @@ DELIVERED
 OR
  
 CANCELLED
-✅ Status Transition Validation
-Current StatusAllowed Next StatusCREATEDCONFIRMED, CANCELLEDCONFIRMEDPROCESSING, CANCELLEDPROCESSINGSHIPPEDSHIPPEDDELIVERED
-Invalid transitions are automatically blocked.
-📄 Pagination
-Retrieve large datasets efficiently.
-Example:
-GET /orders/paged?page=0&size=5
-Benefits
-Faster response times
-Better performance
-Reduced memory consumption
-🔀 Sorting
-Sort records dynamically.
-Example:
-GET /orders/paged?page=0&size=5&sortBy=id
-Supported sorting on:
-Order ID
-Customer Name
-Product Name
-Status
-Created Date
-🔍 Search & Filtering APIs
-Search orders using different criteria.
-Search by Status
-GET /orders/status/DELIVERED
-Search by Customer
-GET /orders/customer/samir
-Search by Product
-GET /orders/product/laptop
-Benefits
-Faster order lookup
-Flexible filtering
-Improved user experience
-Production-ready querying
-⚠️ Validation & Exception Handling
-Jakarta Bean Validation
-Global Exception Handler
-Custom Error Responses
-Resource Not Found Handling
-Invalid Status Transition Handling
-📖 Swagger/OpenAPI Documentation
-Interactive API documentation with built-in testing support.
-Swagger UI:
-http://localhost:8004/swagger-ui/index.html
-🗄 Database
-Spring Data JPA
-Hibernate ORM
-H2 Database
-MySQL Ready
-🏗 Project Architecture
-Client
-   │
-   ▼
-Controller Layer
-   │
-   ▼
-Service Layer
-   │
-   ▼
-Repository Layer
-   │
-   ▼
-Database
-📁 Project Structure
-PackageResponsibilityconfigSecurity & Application ConfigurationcontrollerREST API EndpointsserviceBusiness Logicservice.implService ImplementationsrepositoryDatabase Access LayerentityJPA EntitiesdtoRequest & Response ObjectssecurityAuthentication & AuthorizationexceptionGlobal Exception HandlingutilUtility Classes
-📌 API Endpoints
-Authentication
-MethodEndpointDescriptionPOST/auth/loginGenerate JWT Token
-Orders
-MethodEndpointDescriptionPOST/ordersCreate OrderGET/ordersGet All OrdersGET/orders/{id}Get Order By IDPUT/orders/{id}Update OrderDELETE/orders/{id}Delete OrderPATCH/orders/{id}/statusUpdate Order StatusGET/orders/pagedPagination & SortingGET/orders/status/{status}Search by StatusGET/orders/customer/{customerName}Search by CustomerGET/orders/product/{productName}Search by Product
-🛠 Technology Stack
-TechnologyVersionJava21Spring Boot3.xSpring Security6.xSpring Data JPALatestHibernateLatestJWTLatestMavenLatestH2 DatabaseLatestSwagger/OpenAPILatest
-🚀 Running the Application
-Clone Repository
+```
+ 
+---
+ 
+## 🔐 Security Roles
+ 
+### ADMIN
+- Create Orders
+- Update Orders
+- Delete Orders
+- View Orders
+ 
+### USER
+- View Orders Only
+ 
+---
+ 
+## 📌 REST API Endpoints
+ 
+### Authentication
+ 
+| Method | Endpoint | Description |
+|----------|----------|-------------|
+| POST | /auth/login | Generate JWT Token |
+ 
+### Orders
+ 
+| Method | Endpoint | Description |
+|----------|----------|-------------|
+| POST | /orders | Create Order |
+| GET | /orders | Get All Orders |
+| GET | /orders/{id} | Get Order By ID |
+| PUT | /orders/{id} | Update Order |
+| DELETE | /orders/{id} | Delete Order |
+ 
+---
+ 
+## ▶️ Running the Application
+ 
+### Clone Repository
+ 
+```bash
 git clone <repository-url>
-Build Project
+```
+ 
+### Build Project
+ 
+```bash
 mvn clean install
-Run Application
+```
+ 
+### Run Application
+ 
+```bash
 mvn spring-boot:run
-💾 H2 Database Console
+```
+ 
+---
+ 
+## 📖 Swagger Documentation
+ 
+```plaintext
+http://localhost:8004/swagger-ui/index.html
+```
+ 
+---
+ 
+## 💾 H2 Database Console
+ 
+```plaintext
 http://localhost:8004/h2-console
-🔑 Sample Login Request
+```
+ 
+---
+ 
+## 🔑 Sample Login Request
+ 
+```json
 {
   "username": "admin",
   "password": "password"
 }
-🎯 Key Concepts Implemented
-RESTful API Design
-Layered Architecture
-DTO Pattern
-JWT Authentication
-Spring Security
-Role-Based Access Control (RBAC)
-Order Workflow Management
-Status Transition Validation
-Pagination
-Sorting
-Search & Filtering APIs
-Validation Framework
-Global Exception Handling
-Swagger/OpenAPI
-JPA & Hibernate
-🔮 Future Enhancements
-Audit Fields
-Dashboard & Analytics APIs
-Unit Testing (JUnit & Mockito)
-Docker Support
-Email Notifications
-MySQL Migration
-Cloud Deployment
-CI/CD Pipeline
-👨‍💻 Author
-Samir Shaikh
-Java Backend Developer | Spring Boot | Spring Security | REST APIs | JPA/Hibernate | JWT Authentication
+```
  
+---
  
+## 🎯 Key Concepts Implemented
+ 
+- RESTful API Design
+- Layered Architecture
+- DTO Pattern
+- JWT Authentication
+- Role-Based Access Control
+- Validation Framework
+- Exception Handling
+- Swagger Documentation
+- Spring Security
+- JPA & Hibernate
+ 
+---
+ 
+## 🚀 Future Enhancements
+ 
+- Pagination & Sorting
+- Search & Filtering
+- Audit Logging
+- Docker Support
+- Email Notifications
+- Unit Testing with JUnit & Mockito
+- Deployment on AWS/Render
+- Microservices Architecture
+ 
+---
+ 
+## 👨‍💻 Author
+ 
+**Samir Shaikh**
+ 
+Backend Developer | Java | Spring Boot | Spring Security | REST APIs
