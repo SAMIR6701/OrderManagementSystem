@@ -15,6 +15,8 @@ import com.example.demo.orderEntity.Order;
 import com.example.demo.orderEntity.OrderStatus;
 import com.example.demo.orderrepository.Repository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class Orderservice implements OrderServiceImpl {
 
@@ -50,7 +52,6 @@ public class Orderservice implements OrderServiceImpl {
 
 	}
 
-
 	// <----------------------------------------------------------------------------------------->
 	@Override
 	public List<OrderResponseDTO> getAllOrders() {
@@ -59,20 +60,23 @@ public class Orderservice implements OrderServiceImpl {
 
 	@Override
 	public OrderResponseDTO getOrderbyId(Long id) {
-		Order order = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("order not found with id" + id));
+		Order order = repo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("order not found with id" + id));
 		return mapTOResponseDTO(order);
 
 	}
 
 	@Override
 	public OrderResponseDTO updateOrder(Long id, OrderRequestDTO dto) {
-		Order existingOrder = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("orderNotfound with id" + id));
+		Order existingOrder = repo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("orderNotfound with id" + id));
 
 		existingOrder.setCustomername(dto.getCustomername());
 		existingOrder.setProductName(dto.getProductName());
 		existingOrder.setQuantity(dto.getQuantity());
 		existingOrder.setPrice(dto.getPrice());
 
+		existingOrder.setStatus(dto.getStatus());
 		// Recalculate the total amount
 		Double total_amount = dto.getPrice() * dto.getQuantity();
 
@@ -93,7 +97,6 @@ public class Orderservice implements OrderServiceImpl {
 	// convert entity to DTO
 
 	private OrderResponseDTO mapTOResponseDTO(Order order) {
-		// TODO Auto-generated method stub
 
 		OrderResponseDTO dto = new OrderResponseDTO();
 		dto.setId(order.getId());
@@ -107,4 +110,112 @@ public class Orderservice implements OrderServiceImpl {
 		return dto;
 
 	}
+
+	public OrderResponseDTO updateOrderStatus(Long id, OrderStatus status) {
+		Order order = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("orderNotfound with id" + id));
+		try {
+			if (!isValidTransaction(order.getStatus(), status)) {
+				throw new IllegalStateException(
+						"Invalid Status transaction from " + order.getStatus() + " to " + status);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		}
+		order.setStatus(status.CONFIRMED);
+
+		// System.out.println("old status =" + order.getStatus());
+		// order.setStatus(OrderStatus.CONFIRMED);
+		// System.out.println("new status =" + order.getStatus());
+		Order updatedOrde = repo.save(order);
+		return mapTOResponseDTO(updatedOrde);
+	}
+
+	@Override
+	@Transactional
+	public OrderResponseDTO moveToProcessing(long id, OrderStatus status) {
+		Order order = repo.findById(id).orElseThrow(() -> new RuntimeException("order not found"));
+		try {
+			if (!isValidTransaction(order.getStatus(), status)) {
+				throw new IllegalStateException(
+						"Invalid Status transaction from " + order.getStatus() + " to " + status);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		}
+
+		order.setStatus(OrderStatus.PROCESSING);
+
+		Order moveprocess = repo.save(order);
+
+		return mapTOResponseDTO(moveprocess);
+	}
+
+	@Override
+	@Transactional
+	public OrderResponseDTO moveToShipping(Long id, OrderStatus status) {
+		Order order = repo.findById(id).orElseThrow(() -> new RuntimeException("order not found"));
+		try {
+			if (!isValidTransaction(order.getStatus(), status)) {
+				throw new IllegalStateException(
+						"Invalid Status transaction from " + order.getStatus() + " to " + status);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		}
+
+		order.setStatus(OrderStatus.SHIPPED);
+
+		Order moveshipped = repo.save(order);
+
+		return mapTOResponseDTO(moveshipped);
+
+	}
+
+	@Override
+	@Transactional
+	public OrderResponseDTO moveToDeliverd(Long id, OrderStatus status) {
+		Order order = repo.findById(id).orElseThrow(() -> new RuntimeException("order not found"));
+		try {
+			if (!isValidTransaction(order.getStatus(), status)) {
+				throw new IllegalStateException(
+						"Invalid Status transaction from " + order.getStatus() + " to " + status);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		}
+
+		order.setStatus(OrderStatus.DELIVERED);
+
+		Order moveDeliverd = repo.save(order);
+
+		return mapTOResponseDTO(moveDeliverd);
+
+	}
+
+	private boolean isValidTransaction(OrderStatus current, OrderStatus next) {
+		switch (current) {
+		case CREATED:
+			return next == OrderStatus.CONFIRMED || next == OrderStatus.CANCLLED;
+
+		case CONFIRMED:
+			return next == OrderStatus.PROCESSING || next == OrderStatus.CANCLLED;
+
+		case PROCESSING:
+			return next == OrderStatus.SHIPPED;
+
+		case SHIPPED:
+			return next == OrderStatus.DELIVERED;
+
+		default:
+			return false;
+
+		}
+	}
+
+	
+
 }
